@@ -28,7 +28,7 @@ public class ProdutoService {
     public Produto buscarById(Long id){
         Produto produto = produtoRepository.findById(id).orElse(null);
         if(produto == null){
-            throw new ProdutoNaoEncontradoException("O livro não pôde ser encontrado!");
+            throw new ProdutoNaoEncontradoException("O Produto não pôde ser encontrado!");
         }
         return produto;
     }
@@ -73,4 +73,8 @@ public class ProdutoService {
     private void verificarExistencia(Produto produto){
         buscarById(produto.getId());
     }
+
+//    public List<Produto> buscarProdutosByLojista(){
+//
+//    }
 }

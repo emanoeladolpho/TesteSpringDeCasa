@@ -46,7 +46,11 @@ public class LojistaService {
         Lojista lojista = new Lojista();
         lojista.setId(id);
         verificarExistencia(lojista);
-        lojistaRepository.delete(lojista);
+        try{
+            lojistaRepository.delete(lojista);
+        }catch(Exception e){
+           // throw new Exception("Erro ao excluir lojsita!");
+        }
     }
 
     private void verificarExistencia(Lojista lojista){
@@ -61,4 +65,5 @@ public class LojistaService {
         }
         return lojista.getProdutos();
     }
+
 }
