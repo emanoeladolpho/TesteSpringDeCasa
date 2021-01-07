@@ -48,6 +48,10 @@ public class Produto implements Comparable<Produto> {
 
     }
 
+    public Produto (Lojista lojista){
+        this.lojista = lojista;
+    }
+
     public Produto(Long id, String nome, String descricao, String marcaFabricante, String unidadeMedida, Double pontuacao, String cor, String foto, String video, Double precoUnitario, Lojista lojista) {
         this.id = id;
         this.nome = nome;

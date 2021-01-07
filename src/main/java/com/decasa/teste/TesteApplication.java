@@ -1,6 +1,7 @@
 package com.decasa.teste;
 
 import com.decasa.teste.domain.Produto;
+import com.decasa.teste.service.LojistaService;
 import com.decasa.teste.service.ProdutoService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

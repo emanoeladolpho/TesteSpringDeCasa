@@ -42,6 +42,10 @@ public class Lojista {
 
     }
 
+    public Lojista(String nomeFantasia){
+        this.nomeFantasia = nomeFantasia;
+    }
+
     public Lojista(Long id, String razaoSocial, String nomeFantasia, String inscricaoEstadual, String inscricaoMunicipal, String cnpj, Double taxa, String logomarca, List<Produto> produtos) {
         this.id = id;
         this.razaoSocial = razaoSocial;

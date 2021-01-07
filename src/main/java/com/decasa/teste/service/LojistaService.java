@@ -1,6 +1,7 @@
 package com.decasa.teste.service;
 
 import com.decasa.teste.domain.Lojista;
+import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.LojistaRepository;
 import com.decasa.teste.service.exceptions.LojistaExistenteException;
 import com.decasa.teste.service.exceptions.LojistaNaoEncontradoException;
@@ -44,10 +45,20 @@ public class LojistaService {
     public void deletar(Long id){
         Lojista lojista = new Lojista();
         lojista.setId(id);
+        verificarExistencia(lojista);
         lojistaRepository.delete(lojista);
     }
 
     private void verificarExistencia(Lojista lojista){
         buscar(lojista.getNomeFantasia());
+    }
+
+    public List<Produto> buscarProdutos(String nomeFantasia){
+        Lojista lojista;
+        lojista = lojistaRepository.findByNomeFantasia(nomeFantasia);
+        if(lojista == null){
+            throw new LojistaNaoEncontradoException("O lojista não pode ser encontrado!");
+        }
+        return lojista.getProdutos();
     }
 }

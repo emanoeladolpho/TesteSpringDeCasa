@@ -1,6 +1,7 @@
 package com.decasa.teste.resource;
 
 import com.decasa.teste.domain.Lojista;
+import com.decasa.teste.domain.Produto;
 import com.decasa.teste.service.LojistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,12 @@ public class LojistaResource {
     public ResponseEntity<Lojista> buscarByNomeFantasia(@PathVariable String nome){
         Lojista lojista = lojistaService.buscar(nome);
         return ResponseEntity.status(HttpStatus.OK).body(lojista);
+    }
+
+    @RequestMapping(value = "/produtos/{nomeFantasia}", method = RequestMethod.GET)
+    public ResponseEntity<List<Produto>> buscarProdutos(@PathVariable("nomeFantasia") String nomeFantasia){
+        List produtos =  lojistaService.buscarProdutos(nomeFantasia);
+        return ResponseEntity.status(HttpStatus.OK).body(produtos);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
