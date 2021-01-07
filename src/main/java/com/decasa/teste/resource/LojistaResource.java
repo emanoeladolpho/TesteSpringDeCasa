@@ -38,4 +38,17 @@ public class LojistaResource {
         Lojista lojista = lojistaService.buscar(nome);
         return ResponseEntity.status(HttpStatus.OK).body(lojista);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> atualizar(@RequestBody Lojista lojista, @PathVariable("id") Long id){
+        lojista.setId(id);
+        lojistaService.atualizar(lojista);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        lojistaService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

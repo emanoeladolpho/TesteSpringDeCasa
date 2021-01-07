@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.net.URI;
 import java.util.List;
 
@@ -41,5 +40,18 @@ public class ProdutoResource {
     public ResponseEntity<Produto> buscarByNome(@PathVariable String nome){
         Produto produto = produtoService.buscarByNome(nome);
         return ResponseEntity.status(HttpStatus.OK).body(produto);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> atualizar(@RequestBody Produto produto, @PathVariable("id") Long id){
+        produto.setId(id);
+        produtoService.atualizar(produto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        produtoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

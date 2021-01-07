@@ -31,4 +31,14 @@ public class ProdutoService {
         produto.setId(null);
         return produtoRepository.save(produto);
     }
+
+    public void atualizar(Produto produto){
+        produtoRepository.save(produto);
+    }
+
+    public void deletar (Long id){
+        Produto produto = new Produto();
+        produto.setId(id);
+        produtoRepository.delete(produto);
+    }
 }

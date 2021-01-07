@@ -25,4 +25,14 @@ public class LojistaService {
         Lojista lojista = lojistaRepository.findByNomeFantasia(nomeFantasia);
         return lojista;
     }
+
+    public void atualizar(Lojista lojista){
+        lojistaRepository.save(lojista);
+    }
+
+    public void deletar(Long id){
+        Lojista lojista = new Lojista();
+        lojista.setId(id);
+        lojistaRepository.delete(lojista);
+    }
 }
