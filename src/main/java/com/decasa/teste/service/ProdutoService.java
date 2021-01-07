@@ -1,5 +1,6 @@
 package com.decasa.teste.service;
 
+import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.ProdutoRepository;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
@@ -62,6 +63,11 @@ public class ProdutoService {
         List<Produto> produtos = listar();
         Collections.sort(produtos);
         return produtos;
+    }
+
+    public Produto buscarPorPreco(Double precoUnitario){
+        Produto produto = produtoRepository.findByPrecoUnitario(precoUnitario);
+        return produto;
     }
 
     private void verificarExistencia(Produto produto){

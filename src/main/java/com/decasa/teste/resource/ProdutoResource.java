@@ -40,6 +40,11 @@ public class ProdutoResource {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarOrdemCrescente());
     }
 
+    @RequestMapping(value = "/preco/{precoUnitario}", method = RequestMethod.GET)
+    public ResponseEntity<Produto> buscarPorPreco(@PathVariable("precoUnitario") Double precoUnitario){
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscarPorPreco(precoUnitario));
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> salvar(@Valid @RequestBody Produto produto){
         produto = produtoService.salvar(produto);
