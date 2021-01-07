@@ -1,12 +1,10 @@
 package com.decasa.teste.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Lojista {
@@ -35,11 +33,16 @@ public class Lojista {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String logomarca;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "lojista")
+    @JsonIgnore
+    private List<Produto> produtos;
+
     public Lojista(){
 
     }
 
-    public Lojista(Long id, String razaoSocial, String nomeFantasia, String inscricaoEstadual, String inscricaoMunicipal, String cnpj, Double taxa, String logomarca) {
+    public Lojista(Long id, String razaoSocial, String nomeFantasia, String inscricaoEstadual, String inscricaoMunicipal, String cnpj, Double taxa, String logomarca, List<Produto> produtos) {
         this.id = id;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
@@ -48,6 +51,7 @@ public class Lojista {
         this.cnpj = cnpj;
         this.taxa = taxa;
         this.logomarca = logomarca;
+        this.produtos = produtos;
     }
 
     public Long getId() {
@@ -112,5 +116,13 @@ public class Lojista {
 
     public void setLogomarca(String logomarca) {
         this.logomarca = logomarca;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

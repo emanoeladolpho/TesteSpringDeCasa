@@ -61,19 +61,11 @@ public class ProdutoService {
 
     public List<Produto> listarOrdemCrescente(){
         List<Produto> produtos = listar();
-//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,10.00));
-//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,8.00));
-//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,35.00));
-//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,20.00));
         Collections.sort(produtos);
         return produtos;
     }
 
     private void verificarExistencia(Produto produto){
         buscarById(produto.getId());
-    }
-
-    public void verificarSeVazio(){
-        listar();
     }
 }

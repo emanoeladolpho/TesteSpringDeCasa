@@ -1,13 +1,9 @@
 package com.decasa.teste.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.expression.spel.CompilablePropertyAccessor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.*;
 
 @Entity
 public class Produto implements Comparable<Produto> {
@@ -43,11 +39,16 @@ public class Produto implements Comparable<Produto> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Double precoUnitario;
 
+    @ManyToOne()
+    @JoinColumn(name = "AUTOR_ID")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Lojista lojista;
+
     public Produto(){
 
     }
 
-    public Produto(Long id, String nome, String descricao, String marcaFabricante, String unidadeMedida, Double pontuacao, String cor, String foto, String video, Double precoUnitario) {
+    public Produto(Long id, String nome, String descricao, String marcaFabricante, String unidadeMedida, Double pontuacao, String cor, String foto, String video, Double precoUnitario, Lojista lojista) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -58,6 +59,7 @@ public class Produto implements Comparable<Produto> {
         this.foto = foto;
         this.video = video;
         this.precoUnitario = precoUnitario;
+        this.lojista = lojista;
     }
 
     public Long getId() {
@@ -138,6 +140,14 @@ public class Produto implements Comparable<Produto> {
 
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
+    }
+
+    public Lojista getLojista() {
+        return lojista;
+    }
+
+    public void setLojista(Lojista lojista) {
+        this.lojista = lojista;
     }
 
     @Override
