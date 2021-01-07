@@ -23,13 +23,6 @@ public class ProdutoResource {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.listar());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> salvar(@Valid @RequestBody Produto produto){
-        produto = produtoService.salvar(produto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produto.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Produto> buscar(@PathVariable Long id){
         Produto produto = produtoService.buscarById(id);
@@ -40,6 +33,18 @@ public class ProdutoResource {
     public ResponseEntity<Produto> buscarByNome(@PathVariable String nome){
         Produto produto = produtoService.buscarByNome(nome);
         return ResponseEntity.status(HttpStatus.OK).body(produto);
+    }
+
+    @RequestMapping(value = "/listarPreco", method = RequestMethod.GET)
+    public ResponseEntity<List<Produto>> listarOrdemCrescente(){
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.listarOrdemCrescente());
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> salvar(@Valid @RequestBody Produto produto){
+        produto = produtoService.salvar(produto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produto.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

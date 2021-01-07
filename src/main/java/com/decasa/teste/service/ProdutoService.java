@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,6 +18,10 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
     public List<Produto> listar(){
+        if(produtoRepository == null){
+            System.out.println("Lista vazia");
+            return null;
+        }
         return produtoRepository.findAll();
     }
 
@@ -53,7 +59,21 @@ public class ProdutoService {
         }
     }
 
+    public List<Produto> listarOrdemCrescente(){
+        List<Produto> produtos = listar();
+//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,10.00));
+//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,8.00));
+//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,35.00));
+//        produtos.add(new Produto(null,null,null,null,null,null,null,null,null,20.00));
+        Collections.sort(produtos);
+        return produtos;
+    }
+
     private void verificarExistencia(Produto produto){
         buscarById(produto.getId());
+    }
+
+    public void verificarSeVazio(){
+        listar();
     }
 }

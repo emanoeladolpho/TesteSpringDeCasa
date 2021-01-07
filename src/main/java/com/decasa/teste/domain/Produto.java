@@ -1,6 +1,7 @@
 package com.decasa.teste.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.expression.spel.CompilablePropertyAccessor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class Produto {
+public class Produto implements Comparable<Produto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,5 +138,11 @@ public class Produto {
 
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
+    }
+
+    @Override
+    public int compareTo(Produto o) {
+        int compare = precoUnitario.compareTo(o.precoUnitario);
+        return compare;
     }
 }
