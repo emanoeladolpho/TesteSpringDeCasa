@@ -2,7 +2,9 @@ package com.decasa.teste.service;
 
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.ProdutoRepository;
+import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class ProdutoService {
 
     public Produto buscarById(Long id){
         Produto produto = produtoRepository.findById(id).orElse(null);
+        if(produto == null){
+            throw new ProdutoNaoEncontradoException("O livro não pôde ser encontrado!");
+        }
         return produto;
     }
 
@@ -33,12 +38,22 @@ public class ProdutoService {
     }
 
     public void atualizar(Produto produto){
+        verificarExistencia(produto);
         produtoRepository.save(produto);
     }
 
     public void deletar (Long id){
         Produto produto = new Produto();
         produto.setId(id);
-        produtoRepository.delete(produto);
+        verificarExistencia(produto);
+        try{
+            produtoRepository.delete(produto);
+        }catch (EmptyResultDataAccessException e){
+            throw new ProdutoNaoEncontradoException("O livro não pôde ser encontrado!");
+        }
+    }
+
+    private void verificarExistencia(Produto produto){
+        buscarById(produto.getId());
     }
 }
