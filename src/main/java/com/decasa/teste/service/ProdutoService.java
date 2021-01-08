@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -63,7 +62,6 @@ public class ProdutoService {
         if(produtos == null){
             throw new ProdutoNaoEncontradoException("Não há produtos cadastrados!");
         }
-        Collections.sort(produtos);
         return produtos;
     }
 
@@ -75,16 +73,20 @@ public class ProdutoService {
         return produto;
     }
 
-    private void verificarExistencia(Produto produto){
-        buscarById(produto.getId());
-    }
-
-    public List<Produto> buscarProdutosByLojista(Long id){
+    public List<Produto> buscarByLojista(Long id){
         List<Produto> produtos = produtoRepository.findByLojista(id);
         if(produtos == null){
             throw new ProdutoNaoEncontradoException("O produto não pôde ser encontrado!");
         }
-
         return produtos;
+    }
+
+    public List<Produto> buscarByCategoria(Long id){
+        List<Produto> produtos = produtoRepository.findByCategoria(id);
+        return produtos;
+    }
+
+    private void verificarExistencia(Produto produto){
+        buscarById(produto.getId());
     }
 }

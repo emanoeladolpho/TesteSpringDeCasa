@@ -1,12 +1,11 @@
 package com.decasa.teste.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 
 @Entity
-public class Produto implements Comparable<Produto> {
+public class Produto{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +37,10 @@ public class Produto implements Comparable<Produto> {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Double precoUnitario;
+
+    @ManyToOne()
+    @JoinColumn(name = "CATEGORIA_ID")
+    private Categoria categoria;
 
     @ManyToOne()
     @JoinColumn(name = "LOJISTA_ID")
@@ -146,6 +149,14 @@ public class Produto implements Comparable<Produto> {
         this.precoUnitario = precoUnitario;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     public Lojista getLojista() {
         return lojista;
     }
@@ -154,9 +165,4 @@ public class Produto implements Comparable<Produto> {
         this.lojista = lojista;
     }
 
-    @Override
-    public int compareTo(Produto o) {
-        int compare = precoUnitario.compareTo(o.precoUnitario);
-        return compare;
-    }
 }

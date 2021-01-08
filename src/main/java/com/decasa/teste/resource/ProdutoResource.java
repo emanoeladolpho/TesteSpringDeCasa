@@ -47,7 +47,13 @@ public class ProdutoResource {
 
     @RequestMapping(value = "/lojista/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Produto>> buscarPorLojista(@PathVariable("id") Long idLojista){
-        List<Produto> produtos = produtoService.buscarProdutosByLojista(idLojista);
+        List<Produto> produtos = produtoService.buscarByLojista(idLojista);
+        return ResponseEntity.status(HttpStatus.OK).body(produtos);
+    }
+
+    @RequestMapping(value = "/categoria/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Produto>> buscarByCategoria(@PathVariable("id") Long id){
+        List<Produto> produtos = produtoService.buscarByCategoria(id);
         return ResponseEntity.status(HttpStatus.OK).body(produtos);
     }
 

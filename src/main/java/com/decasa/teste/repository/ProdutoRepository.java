@@ -1,6 +1,5 @@
 package com.decasa.teste.repository;
 
-import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +18,7 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
     @Query(value = "SELECT * FROM Produto WHERE LOJISTA_ID = ?1", nativeQuery = true)
     List<Produto> findByLojista(Long id);
+
+    @Query(value = "SELECT * FROM Produto WHERE CATEGORIA_ID = ?1", nativeQuery = true)
+    List<Produto> findByCategoria(Long id);
 }
