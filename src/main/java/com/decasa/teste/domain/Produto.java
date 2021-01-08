@@ -40,7 +40,7 @@ public class Produto implements Comparable<Produto> {
     private Double precoUnitario;
 
     @ManyToOne()
-    @JoinColumn(name = "AUTOR_ID")
+    @JoinColumn(name = "LOJISTA_ID")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Lojista lojista;
 

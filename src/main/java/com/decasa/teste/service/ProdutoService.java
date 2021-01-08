@@ -1,6 +1,5 @@
 package com.decasa.teste.service;
 
-import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.ProdutoRepository;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
@@ -60,13 +59,19 @@ public class ProdutoService {
     }
 
     public List<Produto> listarOrdemCrescente(){
-        List<Produto> produtos = listar();
+        List<Produto> produtos = produtoRepository.findAllOrderByPreco();
+        if(produtos == null){
+            throw new ProdutoNaoEncontradoException("Não há produtos cadastrados!");
+        }
         Collections.sort(produtos);
         return produtos;
     }
 
     public Produto buscarPorPreco(Double precoUnitario){
         Produto produto = produtoRepository.findByPrecoUnitario(precoUnitario);
+        if(produto == null){
+            throw new ProdutoNaoEncontradoException("O produto não pôde ser encontrado!");
+        }
         return produto;
     }
 
@@ -74,7 +79,12 @@ public class ProdutoService {
         buscarById(produto.getId());
     }
 
-//    public List<Produto> buscarProdutosByLojista(){
-//
-//    }
+    public List<Produto> buscarProdutosByLojista(Long id){
+        List<Produto> produtos = produtoRepository.findByLojista(id);
+        if(produtos == null){
+            throw new ProdutoNaoEncontradoException("O produto não pôde ser encontrado!");
+        }
+
+        return produtos;
+    }
 }

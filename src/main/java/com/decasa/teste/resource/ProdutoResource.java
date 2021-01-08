@@ -45,6 +45,12 @@ public class ProdutoResource {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.buscarPorPreco(precoUnitario));
     }
 
+    @RequestMapping(value = "/lojista/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Produto>> buscarPorLojista(@PathVariable("id") Long idLojista){
+        List<Produto> produtos = produtoService.buscarProdutosByLojista(idLojista);
+        return ResponseEntity.status(HttpStatus.OK).body(produtos);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> salvar(@Valid @RequestBody Produto produto){
         produto = produtoService.salvar(produto);

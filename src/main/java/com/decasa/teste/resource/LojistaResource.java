@@ -40,7 +40,7 @@ public class LojistaResource {
         return ResponseEntity.status(HttpStatus.OK).body(lojista);
     }
 
-    @RequestMapping(value = "/produtos/{nomeFantasia}", method = RequestMethod.GET)
+    @RequestMapping(value = "/produtos/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Produto>> buscarProdutos(@PathVariable("nomeFantasia") String nomeFantasia){
         List produtos =  lojistaService.buscarProdutos(nomeFantasia);
         return ResponseEntity.status(HttpStatus.OK).body(produtos);

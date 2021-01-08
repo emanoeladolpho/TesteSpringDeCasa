@@ -1,5 +1,6 @@
 package com.decasa.teste.repository;
 
+import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +11,12 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
     Produto findByNome(String nome);
 
-    // retornar lista de produtos ordenados na propria pesquisa do banco
-    List<Produto> findAllOrderByPrecoDesc();
+    @Query(value = "SELECT * FROM PRODUTO ORDER BY PRECO_UNITARIO ASC", nativeQuery = true)
+    List<Produto> findAllOrderByPreco();
 
     @Query (value = "SELECT * FROM Produto WHERE PRECO_UNITARIO = ?1", nativeQuery = true)
     Produto findByPrecoUnitario(Double precoUnitario);
+
+    @Query(value = "SELECT * FROM Produto WHERE LOJISTA_ID = ?1", nativeQuery = true)
+    List<Produto> findByLojista(Long id);
 }
