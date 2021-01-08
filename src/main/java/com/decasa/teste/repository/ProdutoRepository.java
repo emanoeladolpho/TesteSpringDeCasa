@@ -21,4 +21,6 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
     @Query(value = "SELECT * FROM Produto WHERE CATEGORIA_ID = ?1", nativeQuery = true)
     List<Produto> findByCategoria(Long id);
+
+    void deleteAllByLojista_Id(Long id);
 }

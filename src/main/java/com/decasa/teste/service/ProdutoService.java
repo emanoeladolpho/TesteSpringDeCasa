@@ -57,6 +57,10 @@ public class ProdutoService {
         }
     }
 
+    public void deletarTodosByLojistaId(Long id){
+        produtoRepository.deleteAllByLojista_Id(id);
+    }
+
     public List<Produto> listarOrdemCrescente(){
         List<Produto> produtos = produtoRepository.findAllOrderByPreco();
         if(produtos == null){

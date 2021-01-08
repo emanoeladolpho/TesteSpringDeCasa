@@ -15,6 +15,8 @@ public class LojistaService {
 
     @Autowired
     private LojistaRepository lojistaRepository;
+    @Autowired
+    private ProdutoService produtoService;
 
     public List<Lojista> listar(){
         return lojistaRepository.findAll();
@@ -30,7 +32,12 @@ public class LojistaService {
         return lojistaRepository.save(lojista);
     }
 
-    public Lojista buscar(String nomeFantasia){
+    public Lojista buscarById(Long id){
+        Lojista lojista = lojistaRepository.findById(id).orElse(null);
+        return lojista;
+    }
+
+    public Lojista buscarByNomeFantasia(String nomeFantasia){
         Lojista lojista = lojistaRepository.findByNomeFantasia(nomeFantasia);
         if(lojista == null){
             throw new LojistaNaoEncontradoException("O lojista não pode ser econtrado!");
@@ -47,6 +54,7 @@ public class LojistaService {
         lojista.setId(id);
         verificarExistencia(lojista);
         try{
+            produtoService.deletarTodosByLojistaId(lojista.getId());
             lojistaRepository.delete(lojista);
         }catch(Exception e){
            // throw new Exception("Erro ao excluir lojsita!");
@@ -54,7 +62,7 @@ public class LojistaService {
     }
 
     private void verificarExistencia(Lojista lojista){
-        buscar(lojista.getNomeFantasia());
+        buscarById(lojista.getId());
     }
 
     public List<Produto> buscarProdutos(String nomeFantasia){
@@ -65,5 +73,4 @@ public class LojistaService {
         }
         return lojista.getProdutos();
     }
-
 }

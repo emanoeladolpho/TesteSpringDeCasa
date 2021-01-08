@@ -36,7 +36,13 @@ public class LojistaResource {
 
     @RequestMapping(value = "/{nome}", method = RequestMethod.GET)
     public ResponseEntity<Lojista> buscarByNomeFantasia(@PathVariable String nome){
-        Lojista lojista = lojistaService.buscar(nome);
+        Lojista lojista = lojistaService.buscarByNomeFantasia(nome);
+        return ResponseEntity.status(HttpStatus.OK).body(lojista);
+    }
+
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Lojista> buscarById(@PathVariable Long id){
+        Lojista lojista = lojistaService.buscarById(id);
         return ResponseEntity.status(HttpStatus.OK).body(lojista);
     }
 
