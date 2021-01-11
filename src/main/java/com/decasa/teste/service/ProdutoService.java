@@ -1,7 +1,11 @@
 package com.decasa.teste.service;
 
+import com.decasa.teste.domain.Categoria;
 import com.decasa.teste.domain.Produto;
+import com.decasa.teste.domain.dto.ProdutoDTO;
+import com.decasa.teste.repository.CategoriaRepository;
 import com.decasa.teste.repository.ProdutoRepository;
+import com.decasa.teste.service.exceptions.CategoriaNaoEncontradaException;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,6 +18,8 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     public List<Produto> listar(){
         if(produtoRepository == null){
@@ -32,8 +38,7 @@ public class ProdutoService {
     }
 
     public Produto buscarByNome(String nome){
-        Produto produto = produtoRepository.findByNome(nome);
-        return produto;
+        return produtoRepository.findByNome(nome);
     }
 
     public Produto salvar(Produto produto){
@@ -81,12 +86,33 @@ public class ProdutoService {
         return produtos;
     }
 
+    // QUANDO A CATEOGIRA NAO EXSTE TÁ RETORNANDO ERRO 500 AO INVÉS DE 404
     public List<Produto> buscarByCategoria(Long id){
         List<Produto> produtos = produtoRepository.findByCategoria(id);
+        if(verificarExistenciaCategoria(id) == null){
+            throw new CategoriaNaoEncontradaException("A categoria não pode ser encontrada!");
+        }
         return produtos;
+    }
+
+    public ProdutoDTO getProdutoDto(Long id){
+       Produto produto = produtoRepository.findById(id).orElse(null);
+        ProdutoDTO produtoDto = new ProdutoDTO();
+       if(produto != null){
+           produtoDto.setNome(produto.getNome());
+           produtoDto.setDescricao(produto.getDescricao());
+           produtoDto.setPrecoUnitario(produto.getPrecoUnitario());
+       }else{
+           throw new ProdutoNaoEncontradoException("O produto não pôde ser encontrado!");
+       }
+       return produtoDto;
     }
 
     private void verificarExistencia(Produto produto){
         buscarById(produto.getId());
+    }
+
+    private Categoria verificarExistenciaCategoria(Long id){
+        return categoriaRepository.findById(id).orElse(null);
     }
 }

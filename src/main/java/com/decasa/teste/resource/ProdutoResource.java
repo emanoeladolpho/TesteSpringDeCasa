@@ -1,6 +1,7 @@
 package com.decasa.teste.resource;
 
 import com.decasa.teste.domain.Produto;
+import com.decasa.teste.domain.dto.ProdutoDTO;
 import com.decasa.teste.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,12 @@ public class ProdutoResource {
     public ResponseEntity<List<Produto>> buscarByCategoria(@PathVariable("id") Long id){
         List<Produto> produtos = produtoService.buscarByCategoria(id);
         return ResponseEntity.status(HttpStatus.OK).body(produtos);
+    }
+
+    @RequestMapping(value = "/dto/{id}", method = RequestMethod.GET)
+    public ResponseEntity<ProdutoDTO> buscarProdutoDto(@PathVariable Long id){
+        ProdutoDTO produtoDTO = produtoService.getProdutoDto(id);
+        return ResponseEntity.status(HttpStatus.OK).body(produtoDTO);
     }
 
     @RequestMapping(method = RequestMethod.POST)

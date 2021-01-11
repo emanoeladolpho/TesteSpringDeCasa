@@ -35,8 +35,7 @@ public class LojistaService {
     }
 
     public Lojista buscarById(Long id){
-        Lojista lojista = lojistaRepository.findById(id).orElse(null);
-        return lojista;
+        return lojistaRepository.findById(id).orElse(null);
     }
 
     public Lojista buscarByNomeFantasia(String nomeFantasia){

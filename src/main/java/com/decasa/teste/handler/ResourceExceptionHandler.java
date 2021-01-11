@@ -1,6 +1,7 @@
 package com.decasa.teste.handler;
 
 import com.decasa.teste.domain.DetalhesErro;
+import com.decasa.teste.service.exceptions.CategoriaNaoEncontradaException;
 import com.decasa.teste.service.exceptions.LojistaExistenteException;
 import com.decasa.teste.service.exceptions.LojistaNaoEncontradoException;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice // permite que eu consiga interceptar todas as exceções que podem acontecer no código
 public class ResourceExceptionHandler {
     // Essa classe vai ser um manipulador de exceções
-
     // Ao capturar a execeção, vai ser retornada uma resposta pro cliente na API
     @ExceptionHandler(ProdutoNaoEncontradoException.class)
     public ResponseEntity<DetalhesErro> handleProdutoNaoEncontradoException
@@ -52,6 +52,17 @@ public class ResourceExceptionHandler {
         erro.setTimestamp(System.currentTimeMillis()); //  pegar o tempo em milisegundos
         erro.setMenssagemDesenvolvedor("http://erros.teste.com/404");
         // O ideal é que exista uma página web com informações de todos os erros que possam ocorrer na API
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    }
+
+    @ExceptionHandler(CategoriaNaoEncontradaException.class)
+    public ResponseEntity<DetalhesErro> handleCategoriaNaoEncontradaException
+            (CategoriaNaoEncontradaException e, HttpServletRequest requesr){
+        DetalhesErro erro = new DetalhesErro();
+        erro.setTitulo("A categoria não pode ser encontrada!");
+        erro.setStatus(404L);
+        erro.setTimestamp(System.currentTimeMillis());
+        erro.setMenssagemDesenvolvedor("htpp://erros.teste.com/404");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 }

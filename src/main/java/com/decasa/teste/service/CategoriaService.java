@@ -3,9 +3,11 @@ package com.decasa.teste.service;
 import com.decasa.teste.domain.Categoria;
 import com.decasa.teste.repository.CategoriaRepository;
 import com.decasa.teste.repository.ProdutoRepository;
+import com.decasa.teste.service.exceptions.CategoriaNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -13,6 +15,7 @@ public class CategoriaService{
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
     private ProdutoRepository produtoRepository;
 
     public List<Categoria> listar(){
@@ -26,6 +29,9 @@ public class CategoriaService{
 
     public Categoria buscar(Long id){
         Categoria categoria  = categoriaRepository.findById(id).orElse(null);
+        if(categoria == null){
+            throw new CategoriaNaoEncontradaException("A categoria não pôde ser encontrada!");
+        }
         return categoria;
     }
 
@@ -34,11 +40,17 @@ public class CategoriaService{
         categoriaRepository.save(categoria);
     }
 
+    @Transactional
     public void deletar(Long id){
         Categoria categoria = new Categoria();
         categoria.setId(id);
-        // AINDA PRECISA DELETAR TOOS OS PRODUTOS DA CATEGORIA QUANDO FOR DELETAR A CATEGORIA
-        categoriaRepository.delete(categoria);
+        verificarExistencia(categoria);
+        try{
+            produtoRepository.deleteAllByCategoria(categoria);
+            categoriaRepository.delete(categoria);
+        }catch(Exception e){
+            throw new CategoriaNaoEncontradaException("A categoria não pode ser encontrada!");
+        }
     }
 
     public void verificarExistencia(Categoria categoria){
