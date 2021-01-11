@@ -1,6 +1,5 @@
 package com.decasa.teste.service;
 
-import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.ProdutoRepository;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
@@ -56,10 +55,6 @@ public class ProdutoService {
         }catch (EmptyResultDataAccessException e){
             throw new ProdutoNaoEncontradoException("O livro não pôde ser encontrado!");
         }
-    }
-
-    public void deletarTodosByLojistaId(Lojista lojista){
-        produtoRepository.deleteAllByLojista(lojista);
     }
 
     public List<Produto> listarOrdemCrescente(){

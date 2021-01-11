@@ -9,6 +9,7 @@ import com.decasa.teste.service.exceptions.LojistaNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -50,16 +51,16 @@ public class LojistaService {
         lojistaRepository.save(lojista);
     }
 
+    @Transactional // Depois pesquisar mais a fundo sobre essa anotação
     public void deletar(Long id){
         Lojista lojista = new Lojista();
         lojista.setId(id);
         verificarExistencia(lojista);
         try{
-            // AINDA PRECISA CORRIGIR ESSE ERRO ----------- :'(
             produtoRepository.deleteAllByLojista(lojista);
             lojistaRepository.delete(lojista);
         }catch(Exception e){
-           // throw new Exception("Erro ao excluir lojsita!");
+            throw new LojistaNaoEncontradoException("Não foi possível encontrar o lojista");
         }
     }
 

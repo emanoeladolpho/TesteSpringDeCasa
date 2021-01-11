@@ -34,7 +34,7 @@ public class LojistaResource {
         return ResponseEntity.created(uri).build();
     }
 
-    @RequestMapping(value = "/{nome}", method = RequestMethod.GET)
+    @RequestMapping(value = "/nomeFantasia{nome}", method = RequestMethod.GET)
     public ResponseEntity<Lojista> buscarByNomeFantasia(@PathVariable String nome){
         Lojista lojista = lojistaService.buscarByNomeFantasia(nome);
         return ResponseEntity.status(HttpStatus.OK).body(lojista);
