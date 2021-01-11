@@ -1,5 +1,6 @@
 package com.decasa.teste.service;
 
+import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.ProdutoRepository;
 import com.decasa.teste.service.exceptions.ProdutoNaoEncontradoException;
@@ -57,8 +58,8 @@ public class ProdutoService {
         }
     }
 
-    public void deletarTodosByLojistaId(Long id){
-        produtoRepository.deleteAllByLojista_Id(id);
+    public void deletarTodosByLojistaId(Lojista lojista){
+        produtoRepository.deleteAllByLojista(lojista);
     }
 
     public List<Produto> listarOrdemCrescente(){

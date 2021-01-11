@@ -3,6 +3,7 @@ package com.decasa.teste.service;
 import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.repository.LojistaRepository;
+import com.decasa.teste.repository.ProdutoRepository;
 import com.decasa.teste.service.exceptions.LojistaExistenteException;
 import com.decasa.teste.service.exceptions.LojistaNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class LojistaService {
     @Autowired
     private LojistaRepository lojistaRepository;
     @Autowired
-    private ProdutoService produtoService;
+    private ProdutoRepository produtoRepository;
 
     public List<Lojista> listar(){
         return lojistaRepository.findAll();
@@ -54,7 +55,8 @@ public class LojistaService {
         lojista.setId(id);
         verificarExistencia(lojista);
         try{
-            produtoService.deletarTodosByLojistaId(lojista.getId());
+            // AINDA PRECISA CORRIGIR ESSE ERRO ----------- :'(
+            produtoRepository.deleteAllByLojista(lojista);
             lojistaRepository.delete(lojista);
         }catch(Exception e){
            // throw new Exception("Erro ao excluir lojsita!");

@@ -1,5 +1,6 @@
 package com.decasa.teste.resource;
 
+import com.decasa.teste.domain.Lojista;
 import com.decasa.teste.domain.Produto;
 import com.decasa.teste.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;

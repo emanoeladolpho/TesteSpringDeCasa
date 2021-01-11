@@ -37,6 +37,13 @@ public class CategoriaResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> atualizar(@RequestBody Categoria categoria, @PathVariable("id") Long id){
+        categoria.setId(id);
+        categoriaService.atulizar(categoria);
+        return ResponseEntity.noContent().build();
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletar(@PathVariable Long id){
         categoriaService.deletar(id);

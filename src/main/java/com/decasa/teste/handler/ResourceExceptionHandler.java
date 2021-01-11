@@ -54,5 +54,4 @@ public class ResourceExceptionHandler {
         // O ideal é que exista uma página web com informações de todos os erros que possam ocorrer na API
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
-
 }
